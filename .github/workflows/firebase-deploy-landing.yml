@@ -15,6 +15,11 @@ on:
       - 'pnpm-workspace.yaml'
       - 'pnpm-lock.yaml'
 
+permissions:
+  checks: write
+  contents: read
+  pull-requests: write
+
 jobs:
   build_and_preview:
     if: ${{ github.event_name == 'pull_request' }}
