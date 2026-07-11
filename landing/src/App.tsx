@@ -440,8 +440,7 @@ export default function App() {
           <a href="#trailer" onClick={closeMobileMenu}>Trailer</a>
           <a href="#sources" onClick={closeMobileMenu}>Quellen</a>
           <a href="https://github.com/waldorfschule-potsdam-dev/projekt-lyra" target="_blank" rel="noreferrer" onClick={closeMobileMenu}>
-            <Code size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '8px' }} />
-            Quellcode
+            Code
           </a>
         </nav>
         <div className="drawer-footer">
