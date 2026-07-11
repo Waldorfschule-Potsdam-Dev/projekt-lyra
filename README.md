@@ -1,9 +1,5 @@
 # 💻 Projekt Lyra – Educational OS Escape Game & Hackathon Infrastructure
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Deploy Game](https://github.com/waldorfschule-potsdam-dev/projekt-lyra/actions/workflows/firebase-deploy-game.yml/badge.svg)](https://github.com/waldorfschule-potsdam-dev/projekt-lyra/actions/workflows/firebase-deploy-game.yml)
-[![Deploy Landing](https://github.com/waldorfschule-potsdam-dev/projekt-lyra/actions/workflows/firebase-deploy-landing.yml/badge.svg)](https://github.com/waldorfschule-potsdam-dev/projekt-lyra/actions/workflows/firebase-deploy-landing.yml)
-
 Willkommen bei **Projekt Lyra**! Dieses Repository enthält eine interaktive OS-Simulation (Escape Game) sowie die **komplette Server- und Management-Infrastruktur**, die genutzt wurde, um das gesamte Spiel kollaborativ zu entwickeln.
 
 ---
@@ -85,4 +81,6 @@ pnpm run dev
 
 ---
 
-[![Deploy to Firebase Hosting](https://github.com/Waldorfschule-Potsdam-Dev/projekt-lyra/actions/workflows/firebase-deploy.yml/badge.svg?branch=main)](https://github.com/Waldorfschule-Potsdam-Dev/projekt-lyra/actions/workflows/firebase-deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Deploy Game](https://github.com/waldorfschule-potsdam-dev/projekt-lyra/actions/workflows/firebase-deploy-game.yml/badge.svg)](https://github.com/waldorfschule-potsdam-dev/projekt-lyra/actions/workflows/firebase-deploy-game.yml)
+[![Deploy Landing](https://github.com/waldorfschule-potsdam-dev/projekt-lyra/actions/workflows/firebase-deploy-landing.yml/badge.svg)](https://github.com/waldorfschule-potsdam-dev/projekt-lyra/actions/workflows/firebase-deploy-landing.yml)
