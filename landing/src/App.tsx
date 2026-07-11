@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'; // deployment test
+import { useState, useEffect, useRef } from 'react';
 import { Menu, ChevronDown, Play, Code } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
