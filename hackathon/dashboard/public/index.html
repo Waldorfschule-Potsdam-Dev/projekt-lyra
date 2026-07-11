@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escape — Entwickler-Dashboard</title>
+  <meta name="description" content="Team-Dashboard für das Escape-Game Projekt">
+  <link rel="icon" type="image/png" href="/uploads/codebrecher-da07387e.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+  <!-- ═══ Login Overlay ═══ -->
+  <div id="login-overlay">
+    <div class="login-card">
+      <div class="login-icon">
+        <i data-lucide="terminal" class="login-logo"></i>
+      </div>
+      <h1>Escape Dashboard</h1>
+      <p class="login-sub">Melde dich mit deinen Team-Zugangsdaten an.</p>
+      <form id="login-form" autocomplete="off">
+        <div class="input-group">
+          <i data-lucide="user"></i>
+          <input type="text" id="login-user" placeholder="Benutzername" required autofocus>
+        </div>
+        <div class="input-group">
+          <i data-lucide="lock"></i>
+          <input type="password" id="login-pass" placeholder="Passwort" required>
+        </div>
+        <button type="submit" class="btn-primary" id="login-btn">
+          <span>Anmelden</span>
+          <i data-lucide="arrow-right"></i>
+        </button>
+        <div id="login-error" class="error-msg hidden"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══ Dashboard ═══ -->
+  <div id="dashboard" class="hidden">
+
+    <!-- ── Sidebar ── -->
+    <aside id="sidebar-container">
+      
+      <!-- Icon Rail -->
+      <div id="icon-rail">
+        <div class="rail-top">
+          <button class="sidebar-tab" data-tab="console" title="Konsole">
+            <i data-lucide="terminal-square"></i>
+          </button>
+          <button class="sidebar-tab" data-tab="files" title="Dateien (Upload)">
+            <i data-lucide="upload"></i>
+          </button>
+          <button class="sidebar-tab" data-tab="chat" title="Team Chat" style="position:relative;">
+            <i data-lucide="message-circle"></i>
+            <div id="global-chat-badge" class="hidden" style="position:absolute; top:6px; right:6px; width:8px; height:8px; background:var(--danger); border-radius:50%;"></div>
+          </button>
+          <button class="sidebar-tab" data-tab="aichat" title="KI Chat">
+            <i data-lucide="sparkles"></i>
+          </button>
+          <button class="sidebar-tab" data-tab="image" title="Bild">
+            <i data-lucide="image"></i>
+          </button>
+          <button class="sidebar-tab" data-tab="audio" title="Audio">
+            <i data-lucide="volume-2"></i>
+          </button>
+        </div>
+        <div class="rail-bottom">
+          <button class="btn-ghost" id="logout-btn" title="Abmelden">
+            <i data-lucide="log-out"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Panel Container -->
+      <div id="sidebar-panel-container">
+        
+        <!-- Global Chat Tab -->
+        <div class="sidebar-content hidden" id="tab-chat" style="display: flex; flex-direction: column; overflow: hidden; height: 100%;">
+          <div class="panel-header"><h3><i data-lucide="message-circle"></i> Team Chat</h3></div>
+          <div id="global-chat-messages" class="chat-messages" style="flex: 1; overflow-y: auto;"></div>
+          <div class="ai-input-area" style="position:relative;">
+            <div id="global-chat-reply" class="hidden" style="padding: 8px 12px; background: var(--bg-2); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--text-secondary); display: flex; justify-content: space-between; align-items: center; border-radius: var(--radius) var(--radius) 0 0; margin-bottom: 8px;">
+              <span id="global-chat-reply-text"></span>
+              <button class="btn-ghost btn-sm" id="global-chat-reply-cancel" style="padding: 2px;"><i data-lucide="x" style="width: 14px; height: 14px;"></i></button>
+            </div>
+            <div id="global-chat-attachments" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;" class="hidden"></div>
+            <div id="global-chat-poll-creator" class="hidden" style="background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; margin-bottom: 8px; position: absolute; bottom: 100%; left: 0; right: 0; box-shadow: var(--shadow); z-index: 11;">
+              <div style="font-weight: 600; font-size: 13px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <span><i data-lucide="bar-chart-2" style="width: 14px; height: 14px; margin-right: 4px;"></i> Umfrage erstellen</span>
+                <button class="btn-ghost btn-sm" id="poll-creator-close" style="padding: 2px;"><i data-lucide="x" style="width: 14px; height: 14px;"></i></button>
+              </div>
+              <input type="text" id="poll-creator-question" placeholder="Frage..." style="width: 100%; background: var(--bg-2); border: 1px solid var(--border); padding: 8px; border-radius: 6px; color: var(--text); margin-bottom: 8px; font-size: 13px; outline: none;">
+              <div id="poll-creator-options" style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px;">
+                <input type="text" class="poll-opt" placeholder="Option 1" style="width: 100%; background: var(--bg-2); border: 1px solid var(--border); padding: 6px 8px; border-radius: 6px; color: var(--text); font-size: 13px; outline: none;">
+                <input type="text" class="poll-opt" placeholder="Option 2" style="width: 100%; background: var(--bg-2); border: 1px solid var(--border); padding: 6px 8px; border-radius: 6px; color: var(--text); font-size: 13px; outline: none;">
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <button class="btn-ghost btn-sm" id="poll-creator-add-opt" style="font-size: 12px;"><i data-lucide="plus" style="width: 12px; height: 12px;"></i> Option</button>
+                <button class="btn-primary btn-sm" id="poll-creator-send">Senden</button>
+              </div>
+            </div>
+            <div id="mention-autocomplete" class="hidden" style="position:absolute; bottom:100%; left:0; right:0; background:var(--bg-1); border:1px solid var(--border); border-radius:var(--radius); max-height:150px; overflow-y:auto; z-index:10; box-shadow:var(--shadow);"></div>
+            <div class="ai-input-wrapper">
+              <textarea id="global-chat-input" placeholder="Nachricht an alle (oder Bild einfügen)…" rows="1"></textarea>
+              <button id="global-chat-send" class="chat-send-btn" title="Senden"><i data-lucide="send"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Chat Tab -->
+        <div class="sidebar-content hidden" id="tab-aichat">
+          <div class="panel-header"><h3><i data-lucide="sparkles"></i> KI Chat</h3></div>
+          <div style="padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--bg-0); display: flex; gap: 8px;">
+            <select id="chat-session-select" style="flex: 1; background: var(--bg-1); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); padding: 6px 8px; outline: none; font-size: 13px;"></select>
+            <div class="dropdown-container">
+              <button id="chat-menu-btn" class="btn-ghost btn-sm" title="Optionen"><i data-lucide="more-vertical"></i></button>
+              <div id="chat-menu-dropdown" class="dropdown-menu">
+                <button id="chat-rename-btn" class="dropdown-item"><i data-lucide="edit-2"></i> Umbenennen</button>
+                <button id="chat-delete-btn" class="dropdown-item danger"><i data-lucide="trash-2"></i> Löschen</button>
+              </div>
+            </div>
+            <button id="chat-new-btn" class="btn-primary btn-sm" title="Neuer Chat"><i data-lucide="plus"></i></button>
+          </div>
+          <div id="chat-messages" class="chat-messages"></div>
+          <div class="ai-input-area">
+            <div id="chat-model-container" style="margin-bottom: 8px; display: none;">
+              <div class="generation-select-wrapper" style="width: fit-content; background: var(--bg-1);">
+                <i data-lucide="cpu"></i>
+                <select id="chat-model-select"></select>
+              </div>
+            </div>
+            <div class="ai-input-wrapper">
+              <textarea id="chat-input" placeholder="Nachricht eingeben…" rows="1"></textarea>
+              <button id="chat-send" class="chat-send-btn" title="Senden"><i data-lucide="send"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image Tab -->
+        <div class="sidebar-content hidden" id="tab-image">
+          <div class="panel-header"><h3><i data-lucide="image"></i> Bild</h3></div>
+          <div id="image-results" class="image-results"></div>
+          <div class="generation-input-area">
+            <div class="generation-input-card">
+              <textarea id="image-prompt" placeholder="Bildbeschreibung eingeben…" rows="2"></textarea>
+              <div id="image-reference-area" class="image-reference-area">
+                <button class="image-reference-btn" title="Referenzbild hinzufügen">
+                  <i data-lucide="image-plus"></i>
+                  <span>Referenzbild</span>
+                </button>
+                <input type="file" id="image-reference-input" accept="image/*" multiple hidden>
+              </div>
+              <div class="generation-controls">
+                <div id="image-model-container" class="generation-select-wrapper" style="display: none;">
+                  <i data-lucide="cpu"></i>
+                  <select id="image-model-select"></select>
+                </div>
+                <div class="generation-select-wrapper">
+                  <i data-lucide="maximize"></i>
+                  <select id="image-size">
+                    <option value="1024x1024">Quadrat (1024×1024)</option>
+                    <option value="1792x1024">Quer (1792×1024)</option>
+                    <option value="1024x1792">Hoch (1024×1792)</option>
+                  </select>
+                </div>
+                <button id="image-generate" class="btn-primary" title="Generieren">
+                  <i data-lucide="wand-2"></i> <span>Generieren</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Audio Tab -->
+        <div class="sidebar-content hidden" id="tab-audio">
+          <div class="panel-header"><h3><i data-lucide="volume-2"></i> Audio</h3></div>
+          <div id="audio-results" class="audio-results"></div>
+          <div class="generation-input-area">
+            <div class="generation-input-card">
+              <textarea id="audio-text" placeholder="Text zum Vorlesen eingeben…" rows="2"></textarea>
+              <div class="generation-controls">
+                <div id="audio-model-container" class="generation-select-wrapper" style="display: none;">
+                  <i data-lucide="cpu"></i>
+                  <select id="audio-model-select"></select>
+                </div>
+                <div class="generation-select-wrapper">
+                  <i data-lucide="user"></i>
+                  <select id="audio-voice">
+                    <option value="alloy">Alloy</option>
+                    <option value="echo">Echo</option>
+                    <option value="fable">Fable</option>
+                    <option value="onyx">Onyx</option>
+                    <option value="nova">Nova</option>
+                    <option value="shimmer">Shimmer</option>
+                  </select>
+                </div>
+                <button id="audio-generate" class="btn-primary" title="Generieren">
+                  <i data-lucide="play"></i> <span>Generieren</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Files Tab -->
+        <div class="sidebar-content hidden" id="tab-files" style="display: flex; flex-direction: column; overflow: hidden; height: 100%;">
+          <div class="panel-header"><h3><i data-lucide="folder-open"></i> Dateien</h3></div>
+          <div style="padding: 16px; padding-bottom: 0;">
+            <label class="btn-primary" id="upload-btn-label" style="width: 100%; justify-content: center;">
+              <i data-lucide="upload"></i> Hochladen
+              <input type="file" id="file-input" accept="image/*,video/*,audio/*" multiple hidden>
+            </label>
+          </div>
+
+          <!-- Drop zone -->
+          <div id="drop-zone" class="drop-zone">
+            <i data-lucide="cloud-upload"></i>
+            <span style="text-align: center;">Hierher ziehen oder <strong>klicken</strong></span>
+          </div>
+
+          <!-- Upload progress -->
+          <div id="upload-progress" class="hidden" style="padding: 0 16px;">
+            <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+            <span id="upload-status">Wird hochgeladen…</span>
+          </div>
+
+          <!-- File list -->
+          <div id="file-list" class="file-list" style="flex: 1; overflow-y: auto;"></div>
+        </div>
+
+        <!-- Console Tab -->
+        <div class="sidebar-content hidden" id="tab-console" style="display: flex; flex-direction: column; overflow: hidden; height: 100%;">
+          <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3><i data-lucide="terminal-square"></i> Konsole</h3>
+            <button id="console-clear" class="btn-ghost btn-sm" title="Leeren"><i data-lucide="trash-2"></i></button>
+          </div>
+          <div id="console-logs" class="console-logs-area">
+            <div style="color: var(--text-muted); text-align: center; margin-top: 20px;">Lausche auf Logs...</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main Area ── -->
+    <main id="main-area">
+
+      <!-- Header -->
+      <header id="header">
+        <div class="header-left">
+          <div class="team-avatar">
+            <i data-lucide="terminal"></i>
+          </div>
+          <h1 id="team-name">Team</h1>
+        </div>
+        <div class="header-right" style="display:flex; align-items:center; gap: 16px;">
+          <a id="vscode-link" href="#" target="_blank" class="btn-primary" style="display:flex; align-items:center; gap: 8px;">
+            <i data-lucide="file-code"></i> VS Code öffnen
+          </a>
+          <div id="mini-usage-container">
+            <div class="usage-placeholder" style="display:flex;align-items:center;gap:8px;color:var(--text-muted);font-size:13px;">
+              <i data-lucide="loader" class="spin" style="width:16px;height:16px;"></i>
+              <span>Lade Nutzungsdaten…</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Bottom Panel: Iframes -->
+      <section id="bottom-panel" style="display: flex; flex-direction: row; gap: 1px; background: var(--border);">
+        <div class="iframe-container" style="flex: 1;">
+          <div class="iframe-header">
+            <i data-lucide="code"></i>
+            <span>OpenCode</span>
+            <a id="opencode-link" href="#" target="_blank" class="btn-ghost btn-sm" title="In neuem Tab öffnen"><i data-lucide="external-link"></i></a>
+          </div>
+          <iframe id="opencode-iframe" src="about:blank"></iframe>
+        </div>
+        <div class="iframe-container" style="flex: 0 0 480px; border-left: 1px solid var(--border);">
+          <div class="iframe-header">
+            <i data-lucide="smartphone"></i>
+            <span style="display: none;">Vorschau</span>
+            <div style="display: flex; flex: 1; align-items: center; background: var(--bg-1); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; margin: 0 8px; overflow: hidden;">
+              <div style="color: var(--text-muted); font-size: 11px; margin-right: 2px;">/</div>
+              <input type="text" id="devserver-path-input" value="" style="background: transparent; border: none; outline: none; color: var(--text); flex: 1; min-width: 0; font-size: 12px; font-family: 'JetBrains Mono', monospace; text-align: left;" title="Pfad eingeben" placeholder="...">
+            </div>
+            <button id="devserver-reload-btn" class="btn-ghost btn-sm" title="Neu laden" style="padding: 4px; margin-right: 4px;"><i data-lucide="refresh-cw"></i></button>
+            <div class="dropdown-container">
+              <button id="devserver-qr-btn" class="btn-ghost btn-sm" title="QR Code anzeigen"><i data-lucide="qr-code"></i></button>
+              <div id="devserver-qr-dropdown" class="dropdown-menu" style="width: 220px; padding: 16px; text-align: center; right: -40px;">
+                <div style="font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px;">Auf dem Handy testen</div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Mit der Kamera scannen</div>
+                <img id="devserver-qr-img" src="" alt="QR Code" style="width: 100%; border-radius: 8px; background: white; padding: 4px;">
+              </div>
+            </div>
+            <a id="devserver-link" href="#" target="_blank" class="btn-ghost btn-sm" title="In neuem Tab öffnen"><i data-lucide="external-link"></i></a>
+          </div>
+          <div style="display: flex; justify-content: center; align-items: center; background: #000; height: 100%; overflow: hidden;">
+            <iframe id="devserver-iframe" src="about:blank" style="width: 480px; height: 820px; border: none; background: #fff;"></iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js?v=3"></script>
+</body>
+</html>

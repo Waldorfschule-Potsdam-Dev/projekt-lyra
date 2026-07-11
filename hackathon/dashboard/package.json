@@ -1,0 +1,18 @@
+{
+  "name": "escape-dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
+    "http-proxy-middleware": "^4.1.1",
+    "multer": "^1.4.5-lts.2",
+    "qrcode": "^1.5.4",
+    "uuid": "^11.1.0",
+    "yaml": "^2.7.1"
+  }
+}

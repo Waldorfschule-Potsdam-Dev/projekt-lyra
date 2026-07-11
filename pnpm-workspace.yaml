@@ -1,0 +1,6 @@
+packages:
+  - 'landing'
+  - 'game'
+  - 'hackathon/dashboard'
+allowBuilds:
+  puppeteer: set this to true or false

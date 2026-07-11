@@ -1,0 +1,253 @@
+
+:root {
+  --launcher-bg: url('https://cdn.hackclub.com/019f52cf-535b-7503-a0e8-2e3e51ab0244/codebrecher-cdffe4a0.webp');
+  --text-light: #ffffff;
+  --text-dark: #111827;
+  --app-icon-size: clamp(48px, 13vw, 60px);
+  --app-grid-columns: 4;
+  --status-bar-height: 28px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #000;
+  color: var(--text-dark);
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 700px) and (hover: hover) and (pointer: fine) {
+  #root {
+    max-width: 400px;
+    height: min(800px, 90vh);
+    border-radius: 40px;
+    border: 12px solid #222;
+    box-shadow: 0 0 50px rgba(255,255,255,0.1);
+  }
+}
+
+.device-screen {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.launcher-container {
+  flex: 1;
+  background-image: var(--launcher-bg);
+  background-size: cover;
+  background-position: center;
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+}
+
+.status-bar {
+  min-height: var(--status-bar-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: env(safe-area-inset-top, 0px) 16px 0;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 100;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 100%);
+}
+
+.status-icons {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.app-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--app-grid-columns), 1fr);
+  grid-auto-rows: min-content;
+  gap: 14px 10px;
+  padding: 16px 14px 8px;
+  overflow-y: auto;
+  align-content: start;
+}
+
+.app-row {
+  display: contents;
+}
+
+/* Hide scrollbar for app grid and homescreen pages */
+.app-grid::-webkit-scrollbar, .hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.app-grid, .hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.app-icon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text-light);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-icon {
+  width: var(--app-icon-size);
+  height: var(--app-icon-size);
+  flex-shrink: 0;
+  border-radius: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25), inset 0 2px 4px rgba(255,255,255,0.15);
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.app-icon svg {
+  width: 55%;
+  height: 55%;
+}
+
+.app-label {
+  font-size: 12px;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.app-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-bar {
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-btn {
+  padding: 12px 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.8;
+  transition: opacity 0.2s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-btn:hover {
+  opacity: 1;
+}
+
+.nav-btn:active {
+  transform: scale(0.9);
+  opacity: 1;
+}
+
+.notification-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(30, 30, 30, 0.85);
+  backdrop-filter: blur(20px);
+  color: white;
+  z-index: 200;
+  padding: 16px;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transform: translateY(-100%);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.notification-shade.open {
+  transform: translateY(0);
+}
+
+.notification-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Compact layout for short screens (e.g. small phones, landscape) */
+@media (max-height: 720px) {
+  .app-grid {
+    padding: 8px 12px 4px;
+    gap: 10px 8px;
+  }
+  .launcher-pages {
+    padding-top: 44px !important;
+  }
+  .dock {
+    padding-bottom: 20px !important;
+  }
+}
+
+/* Very small screens (narrow phones like iPhone SE) */
+@media (max-width: 360px) {
+  :root {
+    --app-icon-size: 48px;
+  }
+  .app-grid {
+    gap: 8px 6px;
+  }
+  .app-label {
+    font-size: 10px;
+  }
+}
+
+/* Tall screens can show a bit more breathing room */
+@media (min-height: 820px) {
+  .clock-time {
+    font-size: 80px;
+  }
+  .app-grid {
+    padding-top: 24px;
+  }
+}

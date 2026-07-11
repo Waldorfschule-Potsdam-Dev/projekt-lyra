@@ -1,0 +1,52 @@
+litellm_base_url: "http://localhost:4000"
+
+llms:
+  chat:
+    - "openrouter/openrouter/free"
+    - "minimax/minimax-m3"
+  image:
+    - "nano-banana"
+    - "grok"
+  audio:
+    - "gpt-4o-mini-tts"
+
+teams:
+  - name: "Pixelfüchse"
+    username: "pixel"
+    password: "CHANGEME"
+    litellm_api_key: "REMOVED"
+    devserver_url: "https://5173.escape.praktikum.click"
+    opencode_url: "https://3000.escape.praktikum.click"
+    vscode_url: "https://8000.escape.praktikum.click"
+
+  - name: "Codebrecher"
+    username: "code"
+    password: "CHANGEME"
+    litellm_api_key: "REMOVED"
+    devserver_url: "https://5174.escape.praktikum.click"
+    opencode_url: "https://3001.escape.praktikum.click"
+    vscode_url: "https://8001.escape.praktikum.click"
+
+  - name: "Datengeister"
+    username: "daten"
+    password: "CHANGEME"
+    litellm_api_key: "REMOVED"
+    devserver_url: "https://5175.escape.praktikum.click"
+    opencode_url: "https://3002.escape.praktikum.click"
+    vscode_url: "https://8002.escape.praktikum.click"
+
+  - name: "Bitbanditen"
+    username: "bit"
+    password: "CHANGEME"
+    litellm_api_key: "REMOVED"
+    devserver_url: "https://5176.escape.praktikum.click"
+    opencode_url: "https://3003.escape.praktikum.click"
+    vscode_url: "https://8003.escape.praktikum.click"
+
+  - name: "Netzpiraten"
+    username: "netz"
+    password: "CHANGEME"
+    litellm_api_key: "REMOVED"
+    devserver_url: "https://5177.escape.praktikum.click"
+    opencode_url: "https://3004.escape.praktikum.click"
+    vscode_url: "https://8004.escape.praktikum.click"

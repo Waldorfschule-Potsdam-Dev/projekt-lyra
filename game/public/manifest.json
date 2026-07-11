@@ -1,0 +1,65 @@
+{
+  "id": "/projekt-lyra/",
+  "name": "Projekt Lyra",
+  "short_name": "Lyra",
+  "description": "Löse Rätsel, entschlüssle Nachrichten und entkomme – ein interaktives Erlebnis direkt im Browser.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "lang": "de",
+  "dir": "ltr",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "categories": ["games", "entertainment", "lifestyle"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot_escapegame.png",
+      "sizes": "463x834",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Projekt Lyra"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "wazaaah öffnen",
+      "short_name": "wazaaah",
+      "description": "Direkt zu den Nachrichten springen",
+      "url": "/wazaaah",
+      "icons": [{ "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Notizen öffnen",
+      "short_name": "Notizen",
+      "description": "Gesammelte Hinweise ansehen",
+      "url": "/notes",
+      "icons": [{ "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Einstellungen",
+      "short_name": "Settings",
+      "description": "App-Einstellungen anpassen",
+      "url": "/settings",
+      "icons": [{ "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ],
+  "edge_side_panel": { "preferred_width": 400 },
+  "launch_handler": { "client_mode": "auto" }
+}

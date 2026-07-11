@@ -1,0 +1,10 @@
+{
+  "name": "projekt-lyra",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel -r run dev",
+    "install:all": "pnpm install"
+  },
+  "devDependencies": {}
+}

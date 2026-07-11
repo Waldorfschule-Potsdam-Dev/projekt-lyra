@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icons/icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="Löse Rätsel, entschlüssle Nachrichten und entkomme – ein interaktives Erlebnis direkt im Browser." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Projekt Lyra" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Projekt Lyra" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta property="og:title" content="Projekt Lyra" />
+    <meta property="og:description" content="Löse Rätsel, entschlüssle Nachrichten und entkomme – ein interaktives Erlebnis direkt im Browser." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Projekt Lyra" />
+    <meta name="twitter:description" content="Löse Rätsel, entschlüssle Nachrichten und entkomme – ein interaktives Erlebnis direkt im Browser." />
+    <title>Projekt Lyra</title>
+    <script>
+      (function() {
+        const methods = ['log', 'error', 'warn', 'info'];
+        methods.forEach(method => {
+          const original = console[method];
+          console[method] = function(...args) {
+            original.apply(console, args);
+            // Send to dashboard parent if inside iframe
+            if (window.parent !== window) {
+              window.parent.postMessage({ type: 'console-intercept', level: method, args: args }, '*');
+            }
+          };
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- Umami Analytics -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="ebec24bd-9141-4bcc-9688-6ebaa57caba3"></script>
+  </body>
+</html>
