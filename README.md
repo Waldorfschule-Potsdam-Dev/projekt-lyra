@@ -67,7 +67,7 @@ Eine moderne, auf Performance und SEO optimierte Einstiegsseite für das Projekt
 
 ## 🛠 Monorepo Setup (Lokale Entwicklung)
 
-Dieses Projekt nutzt `pnpm` Workspaces und `portless` für ein bequemes lokales Setup ohne Port-Chaos.
+Dieses Projekt nutzt `pnpm` Workspaces für ein bequemes lokales Setup.
 
 **1. Abhängigkeiten installieren:**
 ```bash
@@ -75,9 +75,6 @@ pnpm install
 ```
 
 **2. Alle Services (Landing, Game, Dashboard) starten:**
-Mit `portless` kannst du alle Instanzen starten. Sie werden automatisch unter `.local` Domains (anstatt `localhost:5173` etc.) verfügbar gemacht.
 ```bash
 pnpm run dev
 ```
-
-*(Siehe `package.json` im Root-Verzeichnis für alle individuellen Start-Befehle der Teilprojekte).*

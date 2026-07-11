@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Menu, ChevronDown, Play } from 'lucide-react';
+import { Menu, ChevronDown, Play, Code } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 export default function App() {
@@ -144,6 +144,9 @@ export default function App() {
             <a href="#about">Über uns</a>
             <a href="#trailer">Trailer</a>
             <a href="#sources">Quellen</a>
+            <a href="https://github.com/waldorfschule-potsdam-dev/projekt-lyra" target="_blank" rel="noreferrer" title="Quellcode auf GitHub ansehen">
+              <Code size={18} style={{ display: 'inline', verticalAlign: 'text-bottom' }} />
+            </a>
           </nav>
           <button
             type="button"
@@ -436,6 +439,10 @@ export default function App() {
           <a href="#about" onClick={closeMobileMenu}>Über uns</a>
           <a href="#trailer" onClick={closeMobileMenu}>Trailer</a>
           <a href="#sources" onClick={closeMobileMenu}>Quellen</a>
+          <a href="https://github.com/waldorfschule-potsdam-dev/projekt-lyra" target="_blank" rel="noreferrer" onClick={closeMobileMenu}>
+            <Code size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '8px' }} />
+            Quellcode
+          </a>
         </nav>
         <div className="drawer-footer">
           <a

@@ -5,6 +5,5 @@ dist/
 .DS_Store
 .firebase/
 pnpm-debug.log*
-.portless/
 *.pem
 *.key
