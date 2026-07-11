@@ -78,3 +78,7 @@ pnpm install
 ```bash
 pnpm run dev
 ```
+
+---
+
+[![Deploy to Firebase Hosting](https://github.com/Waldorfschule-Potsdam-Dev/projekt-lyra/actions/workflows/firebase-deploy.yml/badge.svg?branch=main)](https://github.com/Waldorfschule-Potsdam-Dev/projekt-lyra/actions/workflows/firebase-deploy.yml)
