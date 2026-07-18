@@ -39,10 +39,14 @@ export function ShareCompose() {
         setMissing(true);
         return;
       }
-      createdUrl = URL.createObjectURL(rec.blob);
-      setPhotoBlob(rec.blob);
+      if (rec.photoUrl) {
+        setPhotoUrl(rec.photoUrl);
+      } else if (rec.blob) {
+        createdUrl = URL.createObjectURL(rec.blob);
+        setPhotoBlob(rec.blob);
+        setPhotoUrl(createdUrl);
+      }
       setPhotoName(rec.name);
-      setPhotoUrl(createdUrl);
     })();
     return () => {
       cancelled = true;
@@ -126,16 +130,17 @@ export function ShareCompose() {
   const recipientNames = DEMO_CONTACTS.filter((c) => selected.has(c.id)).map(
     (c) => c.name,
   );
-  const canSend = selected.size > 0 && !sending && !!photoBlob;
+  const canSend = selected.size > 0 && !sending && (!!photoBlob || !!photoUrl);
 
   const handleSend = async () => {
-    if (!canSend || !photoBlob || !photoId) return;
+    if (!canSend || !photoId) return;
     setSending(true);
     const record: SentShare = {
       id: `sent_${Date.now()}_${Math.random().toString(36).slice(2)}`,
       photoId,
       photoName,
-      photoBlob,
+      photoBlob: photoBlob || undefined,
+      photoUrl: photoUrl || undefined,
       app: target.id,
       recipientIds: Array.from(selected),
       recipientNames,

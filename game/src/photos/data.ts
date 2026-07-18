@@ -17,57 +17,57 @@ export const PHOTO_SOURCES = [
 
 // Demo-Metadaten pro Foto (in echt käme das aus EXIF)
 export const PHOTO_META: Record<string, { location: string; lat: number; lng: number }> = {
-  'codebrecher-db8cd6cf.png': {
+  'codebrecher-db8cd6cf.webp': {
     location: 'Potsdam-Babelsberg, Karl-Marx-Straße 12a',
     lat: 52.3917,
     lng: 13.1167,
   },
-  'codebrecher-ab2502c7.png': {
+  'codebrecher-ab2502c7.webp': {
     location: 'Potsdamer Chaussee 28, 14476 Potsdam',
     lat: 52.3990,
     lng: 13.0950,
   },
-  'codebrecher-990bd737.png': {
+  'codebrecher-990bd737.webp': {
     location: '6465 Unterschächen, Schweiz',
     lat: 46.8500,
     lng: 8.7500,
   },
-  'codebrecher-648268a0.png': {
+  'codebrecher-648268a0.webp': {
     location: 'Berlin-Pankow, Schönhauser Allee 84',
     lat: 52.5410,
     lng: 13.4150,
   },
-  'codebrecher-8d7599e4.png': {
+  'codebrecher-8d7599e4.webp': {
     location: 'Neues Palais, Am Neuen Palais, 14469 Potsdam',
     lat: 52.4062,
     lng: 13.0253,
   },
-  'codebrecher-bffb3450.png': {
+  'codebrecher-bffb3450.webp': {
     location: 'Skigebiet Ehrwalder Alm, Ehrwald, Österreich',
     lat: 47.4019,
     lng: 10.9317,
   },
-  'codebrecher-c589e65c.png': {
+  'codebrecher-c589e65c.webp': {
     location: 'Pariser Platz, 10117 Berlin',
     lat: 52.5163,
     lng: 13.3777,
   },
-  'codebrecher-b0e7ce7f.png': {
+  'codebrecher-b0e7ce7f.webp': {
     location: 'Potsdamer Str. 50, 10785 Berlin',
     lat: 52.5006,
     lng: 13.3670,
   },
-  'codebrecher-c1e086df.png': {
+  'codebrecher-c1e086df.webp': {
     location: 'Universitätsring 4, 1010 Wien, Österreich',
     lat: 48.2135,
     lng: 16.3585,
   },
-  'codebrecher-6ae23b6f.png': {
+  'codebrecher-6ae23b6f.webp': {
     location: 'Babelsberg, 14482 Potsdam-Babelsberg',
     lat: 52.3900,
     lng: 13.0900,
   },
-  'codebrecher-013b00e0.png': {
+  'codebrecher-013b00e0.webp': {
     location: 'Bundestag, Platz der Republik, 11011 Berlin',
     lat: 52.5186,
     lng: 13.3764,
@@ -76,7 +76,8 @@ export const PHOTO_META: Record<string, { location: string; lat: number; lng: nu
 
 export type StoredPhoto = {
   id: string;
-  blob: Blob;
+  blob?: Blob;
+  photoUrl?: string;
   name: string;
   addedAt: number;
   favorite: boolean;
@@ -205,7 +206,8 @@ export type SentShare = {
   id: string;
   photoId: string;
   photoName: string;
-  photoBlob: Blob;
+  photoBlob?: Blob;
+  photoUrl?: string;
   app: ShareAppId;
   recipientIds: string[];
   recipientNames: string[];
