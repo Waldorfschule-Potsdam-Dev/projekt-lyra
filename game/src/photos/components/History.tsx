@@ -86,9 +86,9 @@ export function SentHistory() {
           m.sentAt > acc.sentAt ? m : acc,
         );
         if (last && !next[last.id]) {
-          const url = URL.createObjectURL(last.photoBlob);
+          const url = last.photoUrl || (last.photoBlob ? URL.createObjectURL(last.photoBlob) : '');
           next[last.id] = url;
-          createdUrls.push(url);
+          if (!last.photoUrl && url) createdUrls.push(url);
         }
       }
       if (cancelled) return;
@@ -360,9 +360,9 @@ export function SentChatDetail() {
       setGroup(found);
       const next: Record<string, string> = {};
       for (const msg of found.messages) {
-        const url = URL.createObjectURL(msg.photoBlob);
+        const url = msg.photoUrl || (msg.photoBlob ? URL.createObjectURL(msg.photoBlob) : '');
         next[msg.id] = url;
-        createdUrls.push(url);
+        if (!msg.photoUrl && url) createdUrls.push(url);
       }
       if (cancelled) return;
       setUrls(next);

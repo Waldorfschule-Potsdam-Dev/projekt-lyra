@@ -20,15 +20,9 @@ export default function FotosApp() {
         for (const src of PHOTO_SOURCES) {
           const id = src.split('/').pop() || src;
           if (storedIds.has(id)) continue;
-          const res = await fetch(src);
-          if (!res.ok) {
-            console.warn(`Foto nicht gefunden: ${src}`);
-            continue;
-          }
-          const blob = await res.blob();
           await putStored({
             id,
-            blob,
+            photoUrl: src,
             name: id,
             addedAt: Date.now(),
             favorite: false,
@@ -38,7 +32,7 @@ export default function FotosApp() {
         const all = await getAllStored();
         const normalized = all
           .map((p) => ({ ...p, favorite: p.favorite ?? false }))
-          .map((p) => ({ ...p, url: URL.createObjectURL(p.blob) }))
+          .map((p) => ({ ...p, url: p.photoUrl || (p.blob ? URL.createObjectURL(p.blob) : '') }))
           .sort((a, b) => b.addedAt - a.addedAt);
 
         if (!cancelled) {

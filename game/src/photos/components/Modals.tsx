@@ -94,7 +94,7 @@ export function InfoModal({
             label="Auflösung"
             value={dims ? `${dims.w} × ${dims.h}` : 'wird geladen …'}
           />
-          <InfoRow icon={HardDrive as any} label="Größe" value={formatSize(photo.blob.size)} />
+          <InfoRow icon={HardDrive as any} label="Größe" value={formatSize(photo.blob?.size ?? 2450000)} />
           {meta ? (
             <div style={{ padding: '14px 0', borderBottom: '1px solid #2a2a2a' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start' }}>
