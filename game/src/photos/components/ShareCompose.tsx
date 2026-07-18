@@ -39,13 +39,9 @@ export function ShareCompose() {
         setMissing(true);
         return;
       }
-      if (rec.photoUrl) {
-        setPhotoUrl(rec.photoUrl);
-      } else if (rec.blob) {
-        createdUrl = URL.createObjectURL(rec.blob);
-        setPhotoBlob(rec.blob);
-        setPhotoUrl(createdUrl);
-      }
+      createdUrl = rec.blob ? URL.createObjectURL(rec.blob) : '';
+      setPhotoBlob(rec.blob || new Blob([]));
+      setPhotoUrl(rec.photoUrl || createdUrl);
       setPhotoName(rec.name);
     })();
     return () => {
